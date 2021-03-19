@@ -42,6 +42,11 @@ class Produit
      */
     private $idVendeur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Lot::class, inversedBy="produits")
+     */
+    private $id_lot;
+
     public function getId(): ?int
     {
         return $this->id;

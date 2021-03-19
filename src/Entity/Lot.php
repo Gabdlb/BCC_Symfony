@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Lot
      * @ORM\Column(type="integer", nullable=true)
      */
     private $idVente;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="id_lot")
+     */
+    private $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,36 @@ class Lot
     public function setIdVente(?int $idVente): self
     {
         $this->idVente = $idVente;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setIdLot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getIdLot() === $this) {
+                $produit->setIdLot(null);
+            }
+        }
 
         return $this;
     }
