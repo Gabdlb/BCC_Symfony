@@ -37,6 +37,11 @@ class Personne
      */
     private $telephone;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, mappedBy="idPersonne", cascade={"persist", "remove"})
+     */
+    private $utilisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,28 @@ class Personne
     public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($utilisateur === null && $this->utilisateur !== null) {
+            $this->utilisateur->setIdPersonne(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($utilisateur !== null && $utilisateur->getIdPersonne() !== $this) {
+            $utilisateur->setIdPersonne($this);
+        }
+
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

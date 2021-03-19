@@ -22,6 +22,16 @@ class Offre
      */
     private $OffreAcheteur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="offres")
+     */
+    private $idProduit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Acheteur::class, inversedBy="offres")
+     */
+    private $idAcheteur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +45,30 @@ class Offre
     public function setOffreAcheteur(?float $OffreAcheteur): self
     {
         $this->OffreAcheteur = $OffreAcheteur;
+
+        return $this;
+    }
+
+    public function getIdProduit(): ?Produit
+    {
+        return $this->idProduit;
+    }
+
+    public function setIdProduit(?Produit $idProduit): self
+    {
+        $this->idProduit = $idProduit;
+
+        return $this;
+    }
+
+    public function getIdAcheteur(): ?Acheteur
+    {
+        return $this->idAcheteur;
+    }
+
+    public function setIdAcheteur(?Acheteur $idAcheteur): self
+    {
+        $this->idAcheteur = $idAcheteur;
 
         return $this;
     }

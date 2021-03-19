@@ -27,6 +27,16 @@ class Estimation
      */
     private $date_estimation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="estimations")
+     */
+    private $idProduit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CommissairePriseur::class, inversedBy="estimations")
+     */
+    private $idCommissaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Estimation
     public function setDateEstimation(?\DateTimeInterface $date_estimation): self
     {
         $this->date_estimation = $date_estimation;
+
+        return $this;
+    }
+
+    public function getIdProduit(): ?Produit
+    {
+        return $this->idProduit;
+    }
+
+    public function setIdProduit(?Produit $idProduit): self
+    {
+        $this->idProduit = $idProduit;
+
+        return $this;
+    }
+
+    public function getIdCommissaire(): ?CommissairePriseur
+    {
+        return $this->idCommissaire;
+    }
+
+    public function setIdCommissaire(?CommissairePriseur $idCommissaire): self
+    {
+        $this->idCommissaire = $idCommissaire;
 
         return $this;
     }
