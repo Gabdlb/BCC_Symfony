@@ -87,6 +87,11 @@ class Produit
         $this->offres = new ArrayCollection();
     }
 
+
+    public function __toString(){
+        return (string)$this->nom;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

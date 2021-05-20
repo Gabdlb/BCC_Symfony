@@ -34,6 +34,10 @@ class Vente
         $this->lots = new ArrayCollection();
     }
 
+    public function __toString(){
+        return (string)$this->attribute;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
