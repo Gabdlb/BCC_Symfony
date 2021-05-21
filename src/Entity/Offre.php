@@ -22,15 +22,26 @@ class Offre
      */
     private $OffreAcheteur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="offres")
-     */
-    private $idProduit;
 
     /**
      * @ORM\ManyToOne(targetEntity=Acheteur::class, inversedBy="offres")
      */
     private $idAcheteur;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heure;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lot::class, inversedBy="offres")
+     */
+    private $idLot;
 
     public function getId(): ?int
     {
@@ -69,6 +80,42 @@ class Offre
     public function setIdAcheteur(?Acheteur $idAcheteur): self
     {
         $this->idAcheteur = $idAcheteur;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getHeure(): ?\DateTimeInterface
+    {
+        return $this->heure;
+    }
+
+    public function setHeure(?\DateTimeInterface $heure): self
+    {
+        $this->heure = $heure;
+
+        return $this;
+    }
+
+    public function getIdLot(): ?Lot
+    {
+        return $this->idLot;
+    }
+
+    public function setIdLot(?Lot $idLot): self
+    {
+        $this->idLot = $idLot;
 
         return $this;
     }

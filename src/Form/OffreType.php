@@ -13,8 +13,10 @@ class OffreType extends AbstractType
     {
         $builder
             ->add('OffreAcheteur')
-            ->add('idProduit')
+            ->add('date')
+            ->add('heure')
             ->add('idAcheteur')
+            ->add('idLot')
         ;
     }
 

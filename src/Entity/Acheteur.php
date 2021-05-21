@@ -29,6 +29,22 @@ class Acheteur
      */
     private $offres;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $moyen_paiement;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $identite;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idUtilisateur;
+
     public function __construct()
     {
         $this->offres = new ArrayCollection();
@@ -77,6 +93,42 @@ class Acheteur
                 $offre->setIdAcheteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMoyenPaiement(): ?string
+    {
+        return $this->moyen_paiement;
+    }
+
+    public function setMoyenPaiement(?string $moyen_paiement): self
+    {
+        $this->moyen_paiement = $moyen_paiement;
+
+        return $this;
+    }
+
+    public function getIdentite(): ?string
+    {
+        return $this->identite;
+    }
+
+    public function setIdentite(?string $identite): self
+    {
+        $this->identite = $identite;
+
+        return $this;
+    }
+
+    public function getIdUtilisateur(): ?Utilisateur
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(Utilisateur $idUtilisateur): self
+    {
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }

@@ -29,6 +29,31 @@ class Vente
      */
     private $lots;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_debut;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_fin;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heure_debut;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heure_fin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="ventes")
+     */
+    private $idLieu;
+
     public function __construct()
     {
         $this->lots = new ArrayCollection();
@@ -81,6 +106,66 @@ class Vente
                 $lot->setIdVente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->date_debut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $date_debut): self
+    {
+        $this->date_debut = $date_debut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $date_fin): self
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function getHeureDebut(): ?\DateTimeInterface
+    {
+        return $this->heure_debut;
+    }
+
+    public function setHeureDebut(?\DateTimeInterface $heure_debut): self
+    {
+        $this->heure_debut = $heure_debut;
+
+        return $this;
+    }
+
+    public function getHeureFin(): ?\DateTimeInterface
+    {
+        return $this->heure_fin;
+    }
+
+    public function setHeureFin(?\DateTimeInterface $heure_fin): self
+    {
+        $this->heure_fin = $heure_fin;
+
+        return $this;
+    }
+
+    public function getIdLieu(): ?Lieu
+    {
+        return $this->idLieu;
+    }
+
+    public function setIdLieu(?Lieu $idLieu): self
+    {
+        $this->idLieu = $idLieu;
 
         return $this;
     }

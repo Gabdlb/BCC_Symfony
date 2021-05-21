@@ -15,6 +15,22 @@
                 <th>Attribute</th>
                 <td>{{ vente.attribute }}</td>
             </tr>
+            <tr>
+                <th>Date_debut</th>
+                <td>{{ vente.dateDebut ? vente.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_fin</th>
+                <td>{{ vente.dateFin ? vente.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure_debut</th>
+                <td>{{ vente.heureDebut ? vente.heureDebut|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure_fin</th>
+                <td>{{ vente.heureFin ? vente.heureFin|date('H:i:s') : '' }}</td>
+            </tr>
         </tbody>
     </table>
 

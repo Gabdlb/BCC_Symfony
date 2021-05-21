@@ -74,10 +74,6 @@ class Produit
      */
     private $estimations;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="idProduit")
-     */
-    private $offres;
 
     public function __construct()
     {

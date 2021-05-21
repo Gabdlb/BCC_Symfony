@@ -15,6 +15,14 @@
                 <th>OffreAcheteur</th>
                 <td>{{ offre.OffreAcheteur }}</td>
             </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ offre.date ? offre.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure</th>
+                <td>{{ offre.heure ? offre.heure|date('H:i:s') : '' }}</td>
+            </tr>
         </tbody>
     </table>
 

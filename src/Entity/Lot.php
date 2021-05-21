@@ -39,9 +39,25 @@ class Lot
      */
     private $idVente;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix_depart;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isvendu;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="idLot")
+     */
+    private $offres;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,5 +134,59 @@ class Lot
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getPrixDepart(): ?float
+    {
+        return $this->prix_depart;
+    }
+
+    public function setPrixDepart(?float $prix_depart): self
+    {
+        $this->prix_depart = $prix_depart;
+
+        return $this;
+    }
+
+    public function getIsvendu(): ?bool
+    {
+        return $this->isvendu;
+    }
+
+    public function setIsvendu(?bool $isvendu): self
+    {
+        $this->isvendu = $isvendu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offre[]
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres[] = $offre;
+            $offre->setIdLot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getIdLot() === $this) {
+                $offre->setIdLot(null);
+            }
+        }
+
+        return $this;
     }
 }
