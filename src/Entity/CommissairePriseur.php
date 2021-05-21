@@ -24,6 +24,11 @@ class CommissairePriseur
      */
     private $estimations;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Personne::class, cascade={"persist", "remove"})
+     */
+    private $idPersonne;
+
     public function __construct()
     {
         $this->estimations = new ArrayCollection();
@@ -60,6 +65,18 @@ class CommissairePriseur
                 $estimation->setIdCommissaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdPersonne(): ?Personne
+    {
+        return $this->idPersonne;
+    }
+
+    public function setIdPersonne(?Personne $idPersonne): self
+    {
+        $this->idPersonne = $idPersonne;
 
         return $this;
     }

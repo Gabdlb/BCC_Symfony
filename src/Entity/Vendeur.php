@@ -24,6 +24,11 @@ class Vendeur
      */
     private $produits;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+     */
+    private $idUtilisateur;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -60,6 +65,18 @@ class Vendeur
                 $produit->setIdVendeur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdUtilisateur(): ?Utilisateur
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(?Utilisateur $idUtilisateur): self
+    {
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
