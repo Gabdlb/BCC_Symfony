@@ -8,6 +8,7 @@ use App\Repository\LotRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\ProduitRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -51,10 +52,14 @@ class LotController extends AbstractController
     /**
      * @Route("/{id}", name="lot_show", methods={"GET"})
      */
-    public function show(Lot $lot): Response
+    public function show(Lot $lot, ProduitRepository $produitRepository): Response
     {
+
         return $this->render('lot/show.html.twig', [
             'lot' => $lot,
+            'produits' => $produitRepository->findBy(
+                ['Lot' => $lot->getId()]
+            ),
         ]);
     }
 

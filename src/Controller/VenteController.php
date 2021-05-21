@@ -8,6 +8,7 @@ use App\Repository\VenteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\LotRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -51,10 +52,13 @@ class VenteController extends AbstractController
     /**
      * @Route("/{id}", name="vente_show", methods={"GET"})
      */
-    public function show(Vente $vente): Response
+    public function show(Vente $vente, LotRepository $lotRepository): Response
     {
         return $this->render('vente/show.html.twig', [
             'vente' => $vente,
+            'lots' => $lotRepository->findBy(
+                ['idVente' => $vente->getId()]
+            ),
         ]);
     }
 
@@ -90,5 +94,13 @@ class VenteController extends AbstractController
         }
 
         return $this->redirectToRoute('vente_index');
+    }
+
+    #[Route('/', name: 'vente_lots', methods: ['GET'])]
+    public function lots(VenteRepository $venteRepository): Response
+    {
+        return $this->render('vente/lots.html.twig', [
+            'ventes' => $venteRepository->findAll(),
+        ]);
     }
 }
