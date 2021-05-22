@@ -23,8 +23,8 @@
                 <td>{{ offre.date ? offre.date|date('Y-m-d') : '' }}</td>
                 <td>{{ offre.heure ? offre.heure|date('H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('offre_show', {'id': offre.id}) }}">show</a>
-                    <a href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
+                    <a href="{{ path('offre_show', {'id': offre.id}) }}"><button type="button" class="btn btn-info"><i class="fas fa-eye"></i></button></a>
+                    <a href="{{ path('offre_edit', {'id': offre.id}) }}"><button type="button" class="btn btn-warning"><i class="fas fa-pen"></i></button></a>
                 </td>
             </tr>
         {% else %}

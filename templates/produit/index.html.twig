@@ -29,8 +29,8 @@
                 <td>{{ produit.etat }}</td>
                 <td>{{ produit.artiste }}</td>
                 <td>
-                    <a href="{{ path('produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
+                    <a href="{{ path('produit_show', {'id': produit.id}) }}"><button type="button" class="btn btn-info"><i class="fas fa-eye"></i></button></a>
+                    <a href="{{ path('produit_edit', {'id': produit.id}) }}"><button type="button" class="btn btn-warning"><i class="fas fa-pen"></i></button></a>
                 </td>
             </tr>
         {% else %}
