@@ -54,7 +54,7 @@
                 <td>{{ produit.artiste }}</td>
 
                 <td>
-                    <a href="{{ path('produit_show', {'id': lot.id}) }}">voir</a>
+                    <a href="{{ path('produit_show', {'id': lot.id}) }}"><button type="button" class="btn btn-info"><i class="fas fa-eye"></i></button></a>
                 </td>
             </tr>
         {% else %}
@@ -66,8 +66,38 @@
     </table>
     <br>
     <h3>Faire une enchère</h3>
-    <a href="{{ path('offre_new') }}"><button type="button" class="btn btn-warning">enchérir</button></a>
+    {{ include('offre/_form.html.twig') }}
     <br>
     <br>
 
+    <h3>Liste des enchères pour ce lots</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>OffreAcheteur</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for offre in offres %}
+            <tr>
+                <td>{{ offre.OffreAcheteur }}</td>
+                <td>{{ offre.date ? offre.date|date('Y-m-d') : '' }}</td>
+                <td>{{ offre.heure ? offre.heure|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('offre_show', {'id': offre.id}) }}"><button type="button" class="btn btn-info"><i class="fas fa-eye"></i></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ path('vente_show', {'id': vente.id}) }}"><button type="button" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Retour</button></a>
 {% endblock %}

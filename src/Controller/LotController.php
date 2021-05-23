@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Lot;
+use App\Entity\Offre;
+use App\Entity\Vente;
 use App\Form\LotType;
+use App\Form\OffreType;
 use App\Repository\LotRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ProduitRepository;
+use App\Repository\OffreRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -50,15 +54,36 @@ class LotController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="lot_show", methods={"GET"})
+     * @Route("/{id}", name="lot_show", methods={"GET", "POST"})
      */
-    public function show(Lot $lot, ProduitRepository $produitRepository): Response
+    public function show(Lot $lot, ProduitRepository $produitRepository, OffreRepository $offreRepository, Request $request, Vente $vente): Response
     {
+        $offre = new Offre();
+        $offre->setIdLot($lot);
+        date_default_timezone_set('Europe/Paris');
+        $date = new \DateTimeImmutable();
+        $offre->setHeure($date);
+        $offre->setDate($date);
 
+        $form = $this->createForm(OffreType::class, $offre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($offre);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('lot_show', ['id' => $vente->getId()]);
+        }
         return $this->render('lot/show.html.twig', [
             'lot' => $lot,
+            'form' => $form->createView(),
+            'vente' => $vente,
             'produits' => $produitRepository->findBy(
                 ['Lot' => $lot->getId()]
+            ),
+            'offres' => $offreRepository->findBy(
+                ['idLot' => $lot->getId()]
             ),
         ]);
     }
@@ -88,7 +113,7 @@ class LotController extends AbstractController
      */
     public function delete(Request $request, Lot $lot): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$lot->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $lot->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($lot);
             $entityManager->flush();
@@ -96,4 +121,5 @@ class LotController extends AbstractController
 
         return $this->redirectToRoute('lot_index');
     }
+
 }
